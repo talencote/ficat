@@ -1,5 +1,6 @@
 package com.talencote.ficat.models;
 
+import com.talencote.ficat.models.en.ERole;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

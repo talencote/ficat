@@ -1,8 +1,9 @@
 package com.talencote.ficat.services.impl;
 
-import com.talencote.ficat.models.ERole;
+import com.talencote.ficat.models.en.ERole;
 import com.talencote.ficat.models.Role;
 import com.talencote.ficat.models.User;
+import com.talencote.ficat.models.UserProfile;
 import com.talencote.ficat.payload.request.LoginRequest;
 import com.talencote.ficat.payload.request.SignupRequest;
 import com.talencote.ficat.payload.response.JwtResponse;
@@ -106,6 +107,12 @@ public class AuthServiceImpl implements AuthService {
                 }
             });
         }
+
+        UserProfile userProfile = new UserProfile();
+        userProfile.setAvatarUrl("no avatar");
+        userProfile.setDescription("");
+        user.setUserProfile(userProfile);
+        userProfile.setUser(user);
 
         user.setRoles(roles);
         userRepository.save(user);
