@@ -1,8 +1,7 @@
 package com.talencote.ficat.services;
 
+import com.talencote.ficat.dto.StringIdDto;
 import org.springframework.http.ResponseEntity;
-
-import java.security.Principal;
 
 public interface UserProfileService {
 
@@ -10,9 +9,9 @@ public interface UserProfileService {
 
     public ResponseEntity<?> testToken();
 
-    public ResponseEntity<?> addFavoriteFandom(String fandom, Long id);
+    public ResponseEntity<?> addFavoriteFandom(StringIdDto dto);
 
-    public ResponseEntity<?> removeFavoriteFandom(String fandom, Long id);
+    public ResponseEntity<?> removeFavoriteFandom(StringIdDto dto);
 
     public ResponseEntity<?> addFavoriteFanfic(String fanfic, Long id);
 
@@ -21,4 +20,6 @@ public interface UserProfileService {
     public ResponseEntity<?> getFavoriteFandoms(Long id);
 
     public ResponseEntity<?> postFavoriteFandoms(String fandoms, Long id);
+
+    public ResponseEntity<?> getUserProfile(Long id);
 }

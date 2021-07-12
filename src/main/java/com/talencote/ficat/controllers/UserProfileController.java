@@ -1,6 +1,7 @@
 package com.talencote.ficat.controllers;
 
 import com.talencote.ficat.dto.FandomsDto;
+import com.talencote.ficat.dto.StringIdDto;
 import com.talencote.ficat.services.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,14 +22,14 @@ public class UserProfileController {
 
     @PostMapping("/add_favorite_fandom")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public ResponseEntity<?> addFanfic(@RequestBody String fandom, @RequestBody Long id) {
-        return userProfileService.addFavoriteFandom(fandom, id);
+    public ResponseEntity<?> addFandom(@RequestBody StringIdDto dto) {
+        return userProfileService.addFavoriteFandom(dto);
     }
 
     @PostMapping("/remove_favorite_fandom")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public ResponseEntity<?> removeFanfic(@RequestBody String fandom, @RequestBody Long id) {
-        return userProfileService.removeFavoriteFandom(fandom, id);
+    public ResponseEntity<?> removeFandom(@RequestBody StringIdDto dto) {
+        return userProfileService.removeFavoriteFandom(dto);
     }
 
     @PostMapping("/set_avatar")
@@ -47,5 +48,23 @@ public class UserProfileController {
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public ResponseEntity<?> setFandomsString(@PathVariable Long id, @RequestBody FandomsDto fandoms) {
         return userProfileService.postFavoriteFandoms(fandoms.getFandoms(), id);
+    }
+
+    @GetMapping("/{id}")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public ResponseEntity<?> getProfile(@PathVariable Long id) {
+        return userProfileService.getUserProfile(id);
+    }
+
+    @PostMapping("/add_fanfic")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public ResponseEntity<?> addFavoriteFanfic(@RequestBody String fanfic, @RequestBody Long id) {
+        return userProfileService.addFavoriteFanfic(fanfic, id);
+    }
+
+    @PostMapping("/remove_fanfic")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public ResponseEntity<?> removeFavoriteFanfic(@RequestBody String fanfic, @RequestBody Long id) {
+        return userProfileService.removeFavoriteFanfic(fanfic, id);
     }
 }

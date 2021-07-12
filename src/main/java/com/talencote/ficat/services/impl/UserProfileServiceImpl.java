@@ -1,5 +1,6 @@
 package com.talencote.ficat.services.impl;
 
+import com.talencote.ficat.dto.StringIdDto;
 import com.talencote.ficat.models.UserProfile;
 import com.talencote.ficat.payload.response.MessageResponse;
 import com.talencote.ficat.repository.UserProfileRepository;
@@ -37,27 +38,27 @@ public class UserProfileServiceImpl implements UserProfileService {
     }
 
     @Override
-    public ResponseEntity<?> addFavoriteFandom(String fandom, Long id) {
+    public ResponseEntity<?> addFavoriteFandom(StringIdDto dto) {
         UserProfile userProfile = userProfileRepository.findByUserId(
-                userRepository.findById(id).orElseThrow().getId()).orElseThrow();
+                userRepository.findById(dto.getId()).orElseThrow().getId()).orElseThrow();
         if (userProfile.getFavoriteFandoms() == null) {
-            userProfile.setFavoriteFandoms(fandom + ";");
+            userProfile.setFavoriteFandoms(dto.getString() + ";");
         } else {
-            userProfile.setFavoriteFandoms(userProfile.getFavoriteFandoms() + fandom + ";");
+            userProfile.setFavoriteFandoms(userProfile.getFavoriteFandoms() + dto.getString() + ";");
         }
         userProfileRepository.save(userProfile);
         return ResponseEntity.ok(new MessageResponse("Fandom added to favorites!"));
     }
 
     @Override
-    public ResponseEntity<?> removeFavoriteFandom(String fandom, Long id) {
+    public ResponseEntity<?> removeFavoriteFandom(StringIdDto dto) {
         UserProfile userProfile = userProfileRepository.findByUserId(
-                userRepository.findById(id).orElseThrow().getId()).orElseThrow();
+                userRepository.findById(dto.getId()).orElseThrow().getId()).orElseThrow();
         if (userProfile.getFavoriteFandoms() == null) {
             userProfile.setFavoriteFandoms("");
             userProfileRepository.save(userProfile);
         } else {
-            removeSomethingFromList(fandom, userProfile);
+            removeSomethingFromList(dto.getString(), userProfile);
         }
 
         return ResponseEntity.ok(new MessageResponse("Fandom removed from favorites!"));
@@ -107,6 +108,14 @@ public class UserProfileServiceImpl implements UserProfileService {
         userProfile.setFavoriteFandoms(fandoms);
         userProfileRepository.save(userProfile);
         return ResponseEntity.ok(new MessageResponse("Fandoms saved"));
+    }
+
+    @Override
+    public ResponseEntity<?> getUserProfile(Long id) {
+        UserProfile userProfile = userProfileRepository.findByUserId(
+                userRepository.findById(id).orElseThrow().getId()).orElseThrow();
+        userProfile.setUser(null);
+        return ResponseEntity.ok(userProfile);
     }
 
     private void removeSomethingFromList(String str, UserProfile userProfile) {

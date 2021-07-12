@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.security.Principal;
-
 @RestController
 @RequestMapping("/api/fanfic/edit")
 public class FanficEditController {
@@ -21,7 +19,7 @@ public class FanficEditController {
 
     @PostMapping("/add")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public ResponseEntity<?> addFanfic(@RequestBody FanficDto fanficDto, Principal principal) {
-        return fanficEditService.addFanfic(fanficDto, principal);
+    public ResponseEntity<?> addFanfic(@RequestBody FanficDto fanficDto, Long id) {
+        return fanficEditService.addFanfic(fanficDto, id);
     }
 }

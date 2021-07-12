@@ -8,5 +8,5 @@ import java.security.Principal;
 
 public interface FanficEditService {
 
-    public ResponseEntity<?> addFanfic(@RequestBody FanficDto fanficDto, Principal principal);
+    public ResponseEntity<?> addFanfic(@RequestBody FanficDto fanficDto, Long id);
 }

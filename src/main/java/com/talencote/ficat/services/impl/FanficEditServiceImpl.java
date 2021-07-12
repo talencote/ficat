@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.security.Principal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -31,7 +30,7 @@ public class FanficEditServiceImpl implements FanficEditService {
     FanficRepository fanficRepository;
 
     @Override
-    public ResponseEntity<?> addFanfic(FanficDto fanficDto, Principal principal) {
+    public ResponseEntity<?> addFanfic(FanficDto fanficDto, Long id) {
 
         Fanfic fanfic = new Fanfic(
                 fanficDto.getName(),
@@ -39,7 +38,7 @@ public class FanficEditServiceImpl implements FanficEditService {
                 fanficDto.getContent(),
                 fanficDto.getFandom(),
                 fanficDto.getImageUrl(),
-                userRepository.findByUsername(principal.getName()).orElseThrow()
+                userRepository.findById(id).orElseThrow()
         );
 
         Set<String> strTags = fanficDto.getTags();
