@@ -30,7 +30,7 @@ public class FanficEditServiceImpl implements FanficEditService {
     FanficRepository fanficRepository;
 
     @Override
-    public ResponseEntity<?> addFanfic(FanficDto fanficDto, Long id) {
+    public ResponseEntity<?> addFanfic(FanficDto fanficDto) {
 
         Fanfic fanfic = new Fanfic(
                 fanficDto.getName(),
@@ -38,7 +38,8 @@ public class FanficEditServiceImpl implements FanficEditService {
                 fanficDto.getContent(),
                 fanficDto.getFandom(),
                 fanficDto.getImageUrl(),
-                userRepository.findById(id).orElseThrow()
+//                userRepository.findById(id).orElseThrow()
+                userRepository.findByUsername(fanficDto.getAuthor()).orElseThrow()
         );
 
         Set<String> strTags = fanficDto.getTags();

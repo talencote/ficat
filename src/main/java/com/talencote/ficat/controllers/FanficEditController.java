@@ -19,7 +19,7 @@ public class FanficEditController {
 
     @PostMapping("/add")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public ResponseEntity<?> addFanfic(@RequestBody FanficDto fanficDto, Long id) {
-        return fanficEditService.addFanfic(fanficDto, id);
+    public ResponseEntity<?> addFanfic(@RequestBody FanficDto fanficDto) {
+        return fanficEditService.addFanfic(fanficDto);
     }
 }
